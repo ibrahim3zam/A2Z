@@ -1,0 +1,272 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "A2Z",
+    "dateExported": "2024-02-14T04:36:21.258Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "42e1aad6-226b-4e04-9f59-69a8d664ef83",
+            "name": "Eng",
+            "containerId": "",
+            "created": "2023-12-21T13:50:03.910Z",
+            "sortNum": 10000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "6cf210fb-5353-4ebf-8b76-2b867cb85775",
+            "colId": "a2142d27-f67f-4cb2-a4ee-67be72388976",
+            "containerId": "42e1aad6-226b-4e04-9f59-69a8d664ef83",
+            "name": "signUp",
+            "url": "{{url}}/engineer/",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-12-21T13:50:11.743Z",
+            "modified": "2024-02-13T05:48:48.910Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "userName",
+                        "value": "mohamedashraf"
+                    },
+                    {
+                        "name": "email",
+                        "value": "mohamed.ah44raf.kebn11al@gmail.com"
+                    },
+                    {
+                        "name": "address",
+                        "value": "tanta"
+                    },
+                    {
+                        "name": "age",
+                        "value": "25"
+                    },
+                    {
+                        "name": "password",
+                        "value": "10101010"
+                    },
+                    {
+                        "name": "gender",
+                        "value": "male"
+                    },
+                    {
+                        "name": "phoneNumber",
+                        "value": "01090926419"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\Mohamed\\Pictures\\2021-03\\IMG20210311182340.jpg"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "4a154a04-2351-49cc-9efa-17760875ff93",
+            "colId": "a2142d27-f67f-4cb2-a4ee-67be72388976",
+            "containerId": "42e1aad6-226b-4e04-9f59-69a8d664ef83",
+            "name": "signIn",
+            "url": "{{url}}/engineer/login/",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-12-21T18:35:10.357Z",
+            "modified": "2024-02-13T05:49:04.916Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"email\":\"mohamed.ah44raf.kebn11al@gmail.com\",\n    \"password\":\"10101010\"\n\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "48cf6d02-5e24-4d4a-b353-c2c59efbd0c1",
+            "colId": "a2142d27-f67f-4cb2-a4ee-67be72388976",
+            "containerId": "42e1aad6-226b-4e04-9f59-69a8d664ef83",
+            "name": "CommunityPageUpdate",
+            "url": "{{url}}/engineer/updategallery",
+            "method": "PUT",
+            "sortNum": 40000,
+            "created": "2023-12-26T12:37:39.408Z",
+            "modified": "2023-12-26T12:42:18.433Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\Mohamed\\Pictures\\2022-02\\FB_IMG_1645657470230.jpg"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1va2ViYWw1NTU1QGdtYWlsLmNvbSIsImlkIjoiNjU4OTZmYzNiOGNiYjU3NzhiYWRlYjA3IiwiaWF0IjoxNzAzNTk0NDU3fQ.DnfbgILwYDZsvOtc-2mO6T3U4dp5HzQDWzvL5_a-Oyw",
+                "bearerPrefix": "Saraha"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c3e8ea6b-1ffc-482d-ab6b-f0b462e71611",
+            "colId": "a2142d27-f67f-4cb2-a4ee-67be72388976",
+            "containerId": "42e1aad6-226b-4e04-9f59-69a8d664ef83",
+            "name": "communityPageUpload",
+            "url": "http://localhost:3000/engineer/gallery/",
+            "method": "POST",
+            "sortNum": 45000,
+            "created": "2023-12-26T12:35:46.604Z",
+            "modified": "2023-12-27T16:22:01.922Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\Mohamed\\Pictures\\2022-06\\FB_IMG_1655670345575.jpg",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\Mohamed\\Pictures\\2022-11\\FB_IMG_1668216351185.jpg",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\Mohamed\\Pictures\\2021-03\\IMG20210311182340.jpg",
+                        "isDisabled": true
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1va2ViYWw1NTU1NUBnbWFpbC5jb20iLCJpZCI6IjY1OGM0Y2EzYTM2ZDNiNTk4ZTI0YTcxMiIsImlhdCI6MTcwMzY5MzQ4OX0.kXfx3c-rITD_vlPZ_qlrnkvJxBQAxVIKhxM_ROHomhk",
+                "bearerPrefix": "Saraha"
+            },
+            "tests": []
+        },
+        {
+            "_id": "d21f90f2-be2c-4800-8237-f5355efcf701",
+            "colId": "a2142d27-f67f-4cb2-a4ee-67be72388976",
+            "containerId": "42e1aad6-226b-4e04-9f59-69a8d664ef83",
+            "name": "AddProfilePic",
+            "url": "{{url}}/engineer/Profile/",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2023-12-26T17:18:50.767Z",
+            "modified": "2024-02-13T05:49:29.335Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "65896fc3b8cbb5778badeb07",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\Mohamed\\Pictures\\2022-06\\FB_IMG_1656402727509.jpg"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1vaGFtZWQuYWg0NHJhZi5rZWJuMTFhbEBnbWFpbC5jb20iLCJpZCI6IjY1Y2IwMmMwN2Y5MWUyMTM0MTczNzcwMiIsImlhdCI6MTcwNzgwMzM0NH0.AfeEXmOXpus4B7qVc_W4eNHsZnZkFXGIIao2M8OlSeo",
+                "bearerPrefix": "Saraha"
+            },
+            "tests": []
+        },
+        {
+            "_id": "a4deb4f4-035d-46f3-a556-83c0e04806b5",
+            "colId": "a2142d27-f67f-4cb2-a4ee-67be72388976",
+            "containerId": "42e1aad6-226b-4e04-9f59-69a8d664ef83",
+            "name": "deleteGallery",
+            "url": "{{url}}/engineer/deleteGallery/",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2023-12-27T15:58:19.435Z",
+            "modified": "2023-12-27T16:12:23.025Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1va2ViYWw1NTU1NUBnbWFpbC5jb20iLCJpZCI6IjY1OGM0Y2EzYTM2ZDNiNTk4ZTI0YTcxMiIsImlhdCI6MTcwMzY5MzQ4OX0.kXfx3c-rITD_vlPZ_qlrnkvJxBQAxVIKhxM_ROHomhk",
+                "bearerPrefix": "Saraha"
+            },
+            "tests": []
+        },
+        {
+            "_id": "43a0057c-4457-467d-92e6-9eee7f98ea34",
+            "colId": "a2142d27-f67f-4cb2-a4ee-67be72388976",
+            "containerId": "42e1aad6-226b-4e04-9f59-69a8d664ef83",
+            "name": "updateProfile",
+            "url": "{{url}}/engineer/updateProfile/",
+            "method": "PUT",
+            "sortNum": 70000,
+            "created": "2023-12-27T16:29:25.431Z",
+            "modified": "2023-12-27T16:31:39.153Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\Mohamed\\Pictures\\2021-03\\IMG20210311182340.jpg"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1va2ViYWw1NTU1QGdtYWlsLmNvbSIsImlkIjoiNjU4OTZmYzNiOGNiYjU3NzhiYWRlYjA3IiwiaWF0IjoxNzAzNjkyNzUyfQ.CCl-fELpao95-5Ag2BWEiISmW_8Zpa6aA3VqS3GiXnw",
+                "bearerPrefix": "Saraha"
+            },
+            "tests": []
+        },
+        {
+            "_id": "9ddd8d09-d041-4808-9327-bbc3ae458baf",
+            "colId": "a2142d27-f67f-4cb2-a4ee-67be72388976",
+            "containerId": "42e1aad6-226b-4e04-9f59-69a8d664ef83",
+            "name": "logOut",
+            "url": "{{url}}/engineer/logOut/?userid=658c76b08a2e7f2ec1a614a7",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2023-12-27T19:30:14.222Z",
+            "modified": "2023-12-27T19:40:49.853Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "userid",
+                    "value": "658c76b08a2e7f2ec1a614a7",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1va2ViYUBnbWFpbC5jb20iLCJpZCI6IjY1OGM3NmIwOGEyZTdmMmVjMWE2MTRhNyIsImlhdCI6MTcwMzcwNTg1OH0.Tdm70OmHAzQdiIY4dIE9gdPQTT7M1Ovg1ccWwC6JJO8",
+                "bearerPrefix": "Saraha"
+            },
+            "tests": []
+        }
+    ]
+}
