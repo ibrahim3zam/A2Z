@@ -26,7 +26,7 @@ const nanoid = customAlphabet('1234567890', 6)
 const adminDB = new DBService(AdminModel);
 const engineerDB = new DBService(EngineerModel);
 
-export const SignUp = async (req, res, next) => {
+export const handleSignUp = async (req, res, next) => {
   const {
     phoneNumber,
     OTP,
@@ -298,8 +298,8 @@ export const addEngineer = async (req, res, next) => {
     status: 201
     })
 }
-// TO DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
- export const confirmEmail = async (req, res, next) => {
+
+export const confirmEmail = async (req, res, next) => {
     const { token } = req.params;
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     if (!decoded || !decoded.Email) {
