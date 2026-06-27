@@ -2,37 +2,46 @@
 // import { allowedExtensions } from '../../../utils/allowedExtensions.js';
 import { adminAuth } from '../../../middlewares/auth.js';
 import { multerUploadFile } from '../../../services/multer/multer.cloud.js';
-import * as ac from './admin.controller.js'
+import * as adminController from './admin.controller.js'
 import { Router } from "express";
 const router = Router()
 
+/**
+ * @param {object} options
+ * @param {number} options.userId
+ * @param {number} options.currentBaseSalary
+ * @returns {Promise<number>} - The calculated payslip amount
+ */
 
-router.post('/signup', (ac.SignUp))
-router.post('/phonenumber', (ac.signInP))
-router.post('/OTP', (ac.signInO))
-router.put('/updateadminprofile',multerUploadFile().single('image'), adminAuth,(ac.updateProfile))
-router.get('/getadmininfo',adminAuth,(ac.getadminaccount))
+// const calculatePaysLip = (userId: number , currentBaseSalary: number)
+// const calculatePaysLip = (options: { userId: number; currentBaseSalary: number }) 
 
-router.post('/addengineer',adminAuth,(ac.addEngineer))
-router.get('/confirm/:token', (ac.confirmEmail))
-router.get('/getalleng',adminAuth,(ac.getAll))
-router.get('/getengbyid',adminAuth,(ac.getEngBy))
+router.post('/signup', (adminController.handleSignUp))
+router.post('/phonenumber', (adminController.signInP))
+router.post('/OTP', (adminController.signInO))
+router.put('/updateadminprofile',multerUploadFile().single('image'), adminAuth,(adminController.updateProfile))
+router.get('/getadmininfo',adminAuth,(adminController.getadminaccount))
 
-router.put('/updateengineer/:engId', adminAuth, multerUploadFile().single('image'), (ac.updateEng))
-router.delete('/delete/:engId', adminAuth, (ac.deleteEng))
-// router.get('/logout/:userid', adminAuth, asyncHandler(ac.logOut))
+router.post('/addengineer',adminAuth,(adminController.addEngineer))
+router.get('/confirm/:token', (adminController.confirmEmail))
+router.get('/getalleng',adminAuth,(adminController.getAll))
+router.get('/getengbyid',adminAuth,(adminController.getEngBy))
+
+router.put('/updateengineer/:engId', adminAuth, multerUploadFile().single('image'), (adminController.updateEng))
+router.delete('/delete/:engId', adminAuth, (adminController.deleteEng))
+// router.get('/logout/:userid', adminAuth, asyncHandler(adminController.logOut))
 
 // router.post(
 //   '/addcategory',
 //   isAuthAdmin(),
-//   asyncHandler(ac.addCategory),
+//   asyncHandler(adminController.addCategory),
 // )
 
 // router.put(
 //   '/updatecategory/:categoryId',
 
 //   multerCloudFunction(allowedExtensions.Image).single('image'),
-//   asyncHandler(ac.updateCategory),
+//   asyncHandler(adminController.updateCategory),
 // )
 // router.get('/get', isAuthAdmin(),asyncHandler(ac.getAllCategories))
 // router.post(
