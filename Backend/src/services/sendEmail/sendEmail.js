@@ -1,7 +1,6 @@
 import nodemailer from 'nodemailer';
 
 export const sendEmail = async ({ to, subject, html }) => {
-  // التأكد من وجود إيميل مرسل إليه لتجنب خطأ No recipients defined
   if (!to) {
     console.error('Error: No recipient (to) defined for sendEmail');
     return null;
@@ -17,7 +16,7 @@ export const sendEmail = async ({ to, subject, html }) => {
 
   try {
     const info = await transporter.sendMail({
-      from: `"Saraha App" <${process.env.EMAIL_USER}>`,
+      from: `"A2Z Decoration" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html,

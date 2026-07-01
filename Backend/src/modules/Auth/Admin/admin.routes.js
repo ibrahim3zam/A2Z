@@ -7,74 +7,38 @@ import { Router } from "express";
 const router = Router()
 
 /**
- * @param {object} options
- * @param {number} options.userId
- * @param {number} options.currentBaseSalary
- * @returns {Promise<number>} - The calculated payslip amount
+ * TODO: 
+ * - add proper path names for API endpoints with consistent style across the codebase.
+ * - ensure to use proper and meaningful variable names for functions and any piece of code.
+ * - ensure to decouple controller logic or code from service code with clear boundries
+ * - ensure to have only module domain related functionality.
+ *  for example in admin module you should have only admin related domain logic
+ * -  
  */
 
-// const calculatePaysLip = (userId: number , currentBaseSalary: number)
-// const calculatePaysLip = (options: { userId: number; currentBaseSalary: number }) 
-
 router.post('/signup', (adminController.handleSignUp))
-router.post('/phonenumber', (adminController.signInP))
-router.post('/OTP', (adminController.signInO))
-router.put('/updateadminprofile',multerUploadFile().single('image'), adminAuth,(adminController.updateProfile))
-router.get('/getadmininfo',adminAuth,(adminController.getadminaccount))
+router.post('/phonenumber', (adminController.loginWithPhone))
+router.post('/verify-otp', (adminController.verifyOtp))
+router.put('/profile',multerUploadFile().single('image'), adminAuth,(adminController.updateProfile))
+router.get('/profile-info',adminAuth,(adminController.getadminaccount))
 
-router.post('/addengineer',adminAuth,(adminController.addEngineer))
+router.post('/add-engineer',adminAuth,(adminController.createEngineer))
 router.get('/confirm/:token', (adminController.confirmEmail))
-router.get('/getalleng',adminAuth,(adminController.getAll))
-router.get('/getengbyid',adminAuth,(adminController.getEngBy))
+router.get('/get-all-eng',adminAuth,(adminController.listEngineers))
+router.get('/get-eng-by-id',adminAuth,(adminController.getEngineer))
 
-router.put('/updateengineer/:engId', adminAuth, multerUploadFile().single('image'), (adminController.updateEng))
-router.delete('/delete/:engId', adminAuth, (adminController.deleteEng))
-// router.get('/logout/:userid', adminAuth, asyncHandler(adminController.logOut))
+router.put('/update-engineer/:engId', adminAuth, multerUploadFile().single('image'), (adminController.updateEngineer))
+router.delete('/delete/:engId', adminAuth, (adminController.deleteEngineer))
 
-// router.post(
-//   '/addcategory',
-//   isAuthAdmin(),
-//   asyncHandler(adminController.addCategory),
-// )
 
-// router.put(
-//   '/updatecategory/:categoryId',
-
-//   multerCloudFunction(allowedExtensions.Image).single('image'),
-//   asyncHandler(adminController.updateCategory),
-// )
-// router.get('/get', isAuthAdmin(),asyncHandler(ac.getAllCategories))
-// router.post(
-//   '/addproduct',isAuthAdmin(),
-//   multerCloudFunction(allowedExtensions.Image).fields([{ name: "imageCover", maxCount: 1 },{ name: "Images", maxCount: 10 },]),
-//   // validationCoreFunction(validators.addProductSchema),
-//   asyncHandler(ac.addProduct),
-// )
-// router.put(
-//   '/updateproduct',
-//   isAuthAdmin(),
-//   multerCloudFunction(allowedExtensions.Image).array('image', 10),
-//   // validationCoreFunction(validators.updateProductSchema),
-//   asyncHandler(ac.updateProduct),
-// )
-// router.get('/getallproduct', isAuthAdmin(),asyncHandler(ac.getAllProduct))
+router.post('/logout/:userid', adminAuth,(adminController.logOut))
 // router.get('/getalluser',isAuthAdmin(), asyncHandler(ac.getAllUser))
-// router.get('/getusermsg',isAuthAdmin(),asyncHandler(ac.getUserMessages))
-// router.get('/getalladmin',isAuthAdmin(), asyncHandler(ac.getAllAdmin))
-// router.get('/getuserscount', isAuthAdmin(), asyncHandler(ac.getUserCount))
-// router.get('/getengcount', isAuthAdmin(), asyncHandler(ac.getEngCount))
-// router.get('/getallorder',isAuthAdmin(), asyncHandler(ac.getAllOrder))
-// router.get('/getsomeeng',isAuthAdmin(), asyncHandler(ac.getEngVerified))
-// router.get('/subtotal',isAuthAdmin(), asyncHandler(ac.getOrdersSubTotal))
-
+// router.get('/getuserscount', isAuthAdmin(), asyncHandler(ac.getUserCount)
 // router.put(
 //   '/updateengverify/:engId',
 //   isAuthAdmin(),
 //   asyncHandler(ac.updateEngVerify),
 // )
-
-
-// router.delete('/deleteproduct/:productId',isAuthAdmin(), asyncHandler(ac.deleteProduct))
 // router.delete('/deleteuser/:userId',isAuthAdmin(), asyncHandler(ac.deleteUser))
 
 

@@ -80,7 +80,7 @@ export const template = (
                 <p style="margin-top: 30px; font-size: 14px;">If you didn't request this email, you can safely ignore it.</p>
             </div>
             <div class="footer">
-                &copy; ${new Date().getFullYear()} Saraha App. All rights reserved.
+                &copy; ${new Date().getFullYear()} A2Z Decoration. All rights reserved.
             </div>
         </div>
     </body>
