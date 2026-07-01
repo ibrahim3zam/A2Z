@@ -27,3 +27,5 @@ export const uploadImageSchema = Joi.object({
 export const updateCoverImagesSchema = Joi.object({
   files: Joi.array().items(generateValidation.file).max(5).required(),
 });
+
+

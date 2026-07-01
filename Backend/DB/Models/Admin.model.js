@@ -23,7 +23,7 @@ const AdminSchema = new Schema(
         },
         OTP: {
             type: String,
-            // unique: true,
+            
         },
         
         isVerify: {

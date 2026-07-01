@@ -74,7 +74,7 @@ const engineerSchema = new Schema(
             ref: 'Admin',
         },
         deletedBy: {
-            type: Schema.Types.ObjectId, // شيلنا الـ ref عشان لو حذف نفسه (Soft Delete)
+            type: Schema.Types.ObjectId, 
         },
         isConfirmed: {
             type: Boolean,
