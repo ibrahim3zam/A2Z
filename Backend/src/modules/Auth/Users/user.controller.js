@@ -3,9 +3,8 @@ import * as userService from './user.service.js';
 
 export const handleSignUp = async (req, res, next) => {
   try { 
-  const userSignUpData = req.body
 
-const registeredUser = await userService.registerUserService(userSignUpData, req, next);
+const registeredUser = await userService.registerUserService(req.body);
 successRes({
   res,
   status: 201,
@@ -20,8 +19,8 @@ catch (error) {
     
 export const confirmEmail = async (req, res, next) => {
  try {
-  const { email, otp } = req.body;
-  const user = await userService.confirmEmailService(email, otp, req, next);
+  
+  const user = await userService.confirmEmailService(req.body);
   return successRes({
     res,
     status: 200,
@@ -37,8 +36,8 @@ export const confirmEmail = async (req, res, next) => {
 
 export const logIn = async (req, res, next) => {
   try {
-    const { email, password } = req.body
-   const { user, accessToken, refreshToken } = await userService.logInService(email, password, req, next);
+    
+   const { user, accessToken, refreshToken } = await userService.logInService(req.body);
   successRes({
     res,
     data: { user, accessToken, refreshToken },
@@ -51,8 +50,8 @@ catch (error) {
 
 export const resendCode = async (req, res, next) => {
   try {
-  const { email } = req.body;
-  const user = await userService.resendCodeService(email, req, next);
+  
+  const user = await userService.resendCodeService(req.body);
  
   successRes({ res, data: 'OTP resent to email' });
 }
@@ -61,19 +60,29 @@ catch (error) {
   }}
 
 export const getUserAccount = async (req, res, next) => {
-
-    const user =req.user
-    const FindUser = await UserModel.findById(user._id)
-     if (FindUser && FindUser._id.toString() === user._id.toString()) {
-        return res.status(200).json({ message: 'done', FindUser })
+try {
+    
+   const FindUser = await userService.getUserAccountService(req.user);
+        return successRes({
+          res,
+          status: 200,
+          message: 'Account found',
+          data: { FindUser }
+        });
     }
-    res.status(404).json({ message: 'in-valid Id' })
-}
+    catch (error) {
+        throw new Error(`Get Account Error: ${error.message}`, { cause: error.cause || 500 });
+      }
+  }
+
+
 
 export const logOut = async (req, res, next) => {
  try {
-   const userId = req.user._id;
-   const loggedOutUser = await userService.logOutService(userId, req, next);
+   const token = req.headers.authorization?.split(' ')[1] || null;
+   const tokenJti = req.tokenJti || null;
+   
+   const loggedOutUser = await userService.logOutService(req.user._id, tokenJti, token);
     successRes({
       res,
       status: 200,

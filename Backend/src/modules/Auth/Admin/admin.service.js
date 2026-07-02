@@ -14,6 +14,7 @@ import { emailEvent } from "../../../services/sendEmail/emailEvent.js";
 import { template } from "../../../services/sendEmail/generateHtml.js";
 import { multerUploadFile } from "../../../services/multer/multer.cloud.js";
 import { uploadSingleFile } from "../../../services/multer/cloud.service.js";
+import {v2 as cloudinary} from 'cloudinary'
 const nanoid = customAlphabet('1234567890', 6)
 
 
@@ -333,9 +334,10 @@ export const deleteEngineerService = async (engId, adminId) => {
   }
 
   engExists.deletedBy = adminId;
+  engExists.isDeleted = true; 
+  engExists.deletedAt = new Date();
   await engExists.save(); 
   
-  await EngineerModel.findByIdAndDelete(engId); 
 
   if (engExists.customId) {
     await cloudinary.api.delete_all_resources(`${process.env.PROJECT_FOLDER}/Engineer/ProfilePic/${engExists.customId}`);
@@ -346,7 +348,7 @@ export const deleteEngineerService = async (engId, adminId) => {
 };
 
 export const logoutAdminService = async (requestingAdminId, targetUserId) => {
-  const userExist = await adminDB.findById(targetUserId);
+  const userExist = await AdminModel.findById(targetUserId);
   if (!userExist) {
     const error = new Error('invalid admin id');
     error.cause = 404;

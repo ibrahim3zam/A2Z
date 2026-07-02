@@ -6,8 +6,8 @@ import * as engineerService from './eng.service.js';
 //=============================== Engineer Sign Up ==============================
 export const handleSignUp = async (req, res, next) => {
    try {
-    const engineerSignUpData = req.body;
-   const saveEngineer = await engineerService.registerEngineerService(engineerSignUpData,req,next); 
+    
+   const saveEngineer = await engineerService.registerEngineerService(req.body,req.file); 
 return successRes({
   res,
   status: 201,
@@ -25,8 +25,9 @@ catch (error) {
     
 export const confirmEmail = async (req, res, next) => {
  
- try{   const { engineerData}= req.body;
- const engineer = await engineerService.confirmEmailService(engineerData,req,next);
+ try{   
+    
+ const engineer = await engineerService.confirmEmailService(req.body);
 
   return successRes({
     res,
@@ -44,8 +45,8 @@ catch (error) {
 export const logIn = async (req, res, next) => {
   
   try {
-    const engineerSignInData = req.body
-    const engineer = await engineerService.logInService(engineerSignInData,req,next);
+
+    const engineer = await engineerService.logInService(req.body,req,next);
     successRes({
       res,
       data: engineer,
@@ -59,7 +60,7 @@ export const logIn = async (req, res, next) => {
 export const logOut = async (req, res, next) => {
     try {
     const userid = req.user._id;
-    const engineer = await engineerService.logOutService(userid, req, next);
+    const engineer = await engineerService.logOutService(userid);
     return successRes({
       res,
       status: 200,
@@ -97,7 +98,12 @@ export const getEngAccount = async (req, res, next) => {
 export const updateProfile = async (req, res, next) => {
     try {
         const targetId = req.params.userid || req.user._id
-   const engineer = await engineerService.updateProfileService(req, targetId, next);
+        const engineerUpdatingData = {
+            ...req.body,
+            userRole: req.user.role,
+            updaterId: req.user._id   
+        };
+   const engineer = await engineerService.updateProfileService(engineerUpdatingData, targetId);
     return successRes({
       res,
       status: 200,
@@ -114,8 +120,8 @@ export const updateProfile = async (req, res, next) => {
 
 export const createPost = async (req, res, next) => {
 try{
-    const user = req.user
-    const engineer = await engineerService.createPostService(req,next);
+    
+    const engineer = await engineerService.createPostService(req.user, req.files);
     
 
 
@@ -136,9 +142,9 @@ catch (error) {
 
 export const updatePost = async (req, res, next) => {
    try{
-    const user = req.user
+    
 
-    const engineer = await engineerService.updatePostService(req,next);
+    const engineer = await engineerService.updatePostService(req.user, req.files);
 
 
    
@@ -159,7 +165,7 @@ export const deletePost = async (req, res, next) => {
    try{
         const userId = req.user._id; 
 
-    const engineer = await engineerService.deletePostService(req,userId,next);
+    const engineer = await engineerService.deletePostService(userId);
 
     return successRes({
       res,
@@ -177,7 +183,7 @@ catch (error) {
 export const listAllPosts = async (req, res, next) => {
   try {
     const userId = req.user._id;
-    const posts = await engineerService.listAllPostsService(req,userId, next);
+    const posts = await engineerService.listAllPostsService(userId, next);
 
 
     return successRes({
