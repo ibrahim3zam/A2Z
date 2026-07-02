@@ -14,7 +14,6 @@ app.get('/', (req, res) => res.send('Hello World!'))
 app.use('/engineer',routers.engineerRouter)
 app.use('/admin',routers.adminRouter)
 app.use('/user',routers.userRouter)
-// app.use('/category',routers.categoryRoute)
 
 
 

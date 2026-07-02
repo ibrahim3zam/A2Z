@@ -6,9 +6,9 @@ import * as adminService from './admin.service.js';
 
 export const handleSignUp = async (req, res, next) => {
   try {
-    const adminData = req.body;
+    
 
-    const savedAdmin = await adminService.registerAdminService(adminData);
+    const savedAdmin = await adminService.registerAdminService(req.body);
 
     return successRes({
       res,
@@ -35,9 +35,11 @@ export const loginWithPhone = async (req, res, next) => {
 
     const serviceData = await adminService.requestLoginOtp(phoneNumber);
 
-    return res.status(200).json({
+    return successRes({
+      res,
+      status: 200,
       message: 'OTP processed successfully',
-      yourOTP: serviceData
+      data: { yourOTP: serviceData }
     });
 
   } catch (error) {
@@ -56,9 +58,11 @@ export const verifyOtp = async (req, res, next) => {
 
     const tokens = await adminService.verifyOtpAndGenerateTokens(phoneNumber, OTP);
 
-    return res.status(200).json({ 
-      message: 'Login Successful', 
-      ...tokens
+    return successRes({
+      res,
+      status: 200,
+      message: 'Login Successful',
+      data: tokens
     });
 
   } catch (error) {
@@ -74,7 +78,12 @@ export const updateProfile = async (req, res, next) => {
 
     const updatedAdmin = await adminService.updateAdminProfileService(userId, bodyData, file);
 
-    return res.status(200).json({ message: 'Done', updatedAdmin });
+    return successRes({
+      res,
+      status: 200,
+      message: 'Profile updated successfully',
+      data: { admin: updatedAdmin }
+    });
 
   } catch (error) {
     return next(new Error(`Update Profile Error: ${error.message}`, { cause: error.cause || 500 }));
@@ -82,14 +91,18 @@ export const updateProfile = async (req, res, next) => {
 };
 
 
-export const getadminaccount = async (req, res, next) => {
+export const getAdminAccount = async (req, res, next) => {
   try {
     const userId = req.user._id;
 
     const admin = await adminService.getAdminAccountService(userId);
 
-    return res.status(200).json({ message: 'done', admin });
-
+return successRes({
+      res,
+      status: 200,
+      message: 'Account found',
+      data: { admin }
+    });
   } catch (error) {
     return next(new Error(`Get Account Error: ${error.message}`, { cause: error.cause || 500 }));
   }
@@ -143,9 +156,14 @@ export const listEngineers = async (req, res, next) => {
   try {
     const adminId = req.user._id;
 
-    const Engs = await adminService.listEngineersService(adminId);
+    const engineers = await adminService.listEngineersService(adminId);
 
-    return res.status(200).json({ message: 'Done', Engs });
+    return successRes({
+      res,
+      status: 200,
+      message: 'Done',
+      data: { engineers }
+    });
 
   } catch (error) {
     return next(new Error(`List Engineers Error: ${error.message}`, { cause: error.cause || 500 }));
@@ -159,8 +177,12 @@ export const getEngineer = async (req, res, next) => {
     const { engid } = req.query;
 
     const eng = await adminService.getEngineerService(adminId, engid);
-
-    return res.status(200).json({ message: 'Done', eng });
+    return successRes({
+      res,
+      status: 200,
+      message: 'Done',
+      data: { eng }
+    });
   } catch (error) {
     return next(new Error(`Get Engineer Error: ${error.message}`, { cause: error.cause || 500 }));
   }
@@ -195,7 +217,11 @@ export const deleteEngineer = async (req, res, next) => {
 
     await adminService.deleteEngineerService(engId, adminId);
 
-    return res.status(200).json({ message: 'Deleted Done' });
+    return successRes({
+      res,
+      status: 200,
+      message: 'Engineer deleted successfully'
+    });
   } catch (error) {
     return next(new Error(`Delete Engineer Error: ${error.message}`, { cause: error.cause || 500 }));
   }
@@ -209,7 +235,11 @@ export const logOut = async (req, res, next) => {
 
     await adminService.logoutAdminService(requestingAdminId, userid);
 
-    return res.status(200).json({ message: "log out done" });
+    return successRes({
+      res,
+      status: 200,
+      message: 'Logout successful'
+    });
   } catch (error) {
     return next(new Error(`Logout Error: ${error.message}`, { cause: error.cause || 500 }));
   }

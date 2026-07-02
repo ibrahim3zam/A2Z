@@ -11,12 +11,12 @@ import { RevokeToken } from "../../../../DB/Models/RevokeToken.model.js";
 
 
 
-export const registerUserService = async (userSignUpData,req,next) => {
+export const registerUserService = async (userSignUpData) => {
     const { userName, email, password } = userSignUpData;
 
     const isEmailDuplicate = await UserModel.findOne({ email })
     if (isEmailDuplicate) {
-       return next(new BadRequestError('Email already exists'))
+        throw new BadRequestError('Email already exists', { cause: 400 });
     }
     const saltRounds = parseInt(process.env.SALT) || 10;
   const hash = await bcrypt.hash(password, saltRounds);
@@ -36,7 +36,7 @@ export const registerUserService = async (userSignUpData,req,next) => {
    
     const saveUser = await newUser.save()
     if (!saveUser) {
-        return next(new Error('fail to sign up', { cause: 400 }))
+        throw new Error('fail to sign up', { cause: 400 });
     }
       emailEvent.emit('sendEmail', {
     to: email,
@@ -57,28 +57,29 @@ return safeUser
 }
 
 
-export const confirmEmailService = async (email, otp, req, next) => {
-    
-  const user = await UserModel.findOne({ email });
+export const confirmEmailService = async (confirmEmailData) => {
+    const { email, otp } = confirmEmailData;
+    const user = await UserModel.findOne({ email });
 
-  if (!user) {
-    return next(new NotFoundError('Invalid email'));
+    if (!user) {
+        throw new NotFoundError('Invalid email');
+
   }
   if (!user.emailOtp?.otp || user.emailOtp.expiredIn < new Date()) {
-    return next(new NotFoundError('OTP expired'));
+    throw new NotFoundError('OTP expired');
   }
   if (user.isConfirmed === true) {
-    return next(new BadRequestError('Email already confirmed'));
+    throw new BadRequestError('Email already confirmed');
   }
 
   if (!otp || !user.emailOtp?.otp) {
-    return next(new Error('Invalid or expired OTP'));
+    throw new Error('Invalid or expired OTP');
   }
 
   const isMatch = await bcrypt.compare(otp, user.emailOtp.otp);
 
   if (!isMatch) {
-    return next(new Error('Invalid OTP'));
+    throw new Error('Invalid OTP');
   }
 
   await UserModel.updateOne(
@@ -91,23 +92,24 @@ export const confirmEmailService = async (email, otp, req, next) => {
 return user;
 }
 
-export const logInService = async (email, password, req, next) => {
-     const user = await UserModel.findOne({ email })
+export const logInService = async (logInData) => {
+    const { email, password } = logInData;
+    const user = await UserModel.findOne({ email })
     if (!user) {
-        return next(new BadRequestError('Invalid login credentials'))
+        throw new BadRequestError('Invalid login credentials');
     }
 
     if (user.isConfirmed == false) {
-        return next(new BadRequestError('Please Verified your Account'))
+        throw new BadRequestError('Please Verified your Account');
     }
     if (!user.isActive) {
-    return next(new BadRequestError(
-      'Your account has been deactivated. Please contact support.'
-    ));
-  }
+        throw new BadRequestError(
+            'Your account has been deactivated. Please contact support.'
+        );
+    }
    const isMatch = await user.comparePassword(password);
   if (!isMatch) {
-    return next(new BadRequestError('Invalid email or password'));
+    throw new BadRequestError('Invalid email or password');
   }
     
   const accessJti = nanoid();
@@ -141,16 +143,17 @@ return { user, accessToken, refreshToken };
 }
 
 
-export const resendCodeService = async ( email, req, next) => {
-     const user = await UserModel.findOne({ email });
-      if (!user) {
-        return next(new Error('Invalid email'));
-      }
-      if (user.isConfirmed) {
-        return next(new Error('Email already confirmed'));
+export const resendCodeService = async (resendCodeData) => {
+    const { email } = resendCodeData;
+    const user = await UserModel.findOne({ email });
+     if (!user) {
+        throw new NotFoundError('Invalid email');
+     }
+     if (user.isConfirmed) {
+        throw new BadRequestError('Email already confirmed');
       }
       if(user.isEmailSent){
-       return next(new Error('OTP already sent. Please check your email or wait before requesting again.')); 
+       throw new BadRequestError('OTP already sent. Please check your email or wait before requesting again.'); 
       }
       const otp = generateOtp();
       const hashOtp = await bcrypt.hash(otp, 5);
@@ -177,32 +180,42 @@ export const resendCodeService = async ( email, req, next) => {
 
 
 
-export const logOutService = async (userId, req, next) => {
-    
-  const existingUser = await UserModel.findById(userId);
-  if (!existingUser) {
-    return res.status(404).json({ message: 'invalid user id' });
-  }
-
-  if (req.tokenJti) {
-    const token = req.headers.authorization?.split(' ')[1];
-    const decoded = token ? jwt.decode(token) : null;
-    const expiredIn = decoded?.exp
-      ? new Date(decoded.exp * 1000)
-      : new Date(Date.now() + 60 * 60 * 1000);
-
-    await RevokeToken.create({
-      jti: req.tokenJti,
-      expiredIn,
-      userId: userId,
-      onModel: 'User',
-    }).catch(() => {});
-  }
-   const loggedOutUser = await UserModel.updateOne(
-    { _id: userId },
-    {
-      isActive: false,
+export const logOutService = async (userId, tokenJti, token) => {
+    const existingUser = await UserModel.findById(userId);
+    if (!existingUser) {
+        throw new NotFoundError('User not found');
     }
-  );
-  return loggedOutUser
+
+    
+    if (tokenJti) {
+        
+        const decoded = token ? jwt.decode(token) : null;
+        const expiredIn = decoded?.exp
+            ? new Date(decoded.exp * 1000)
+            : new Date(Date.now() + 60 * 60 * 1000);
+
+        await RevokeToken.create({
+            jti: tokenJti,
+            expiredIn,
+            userId: userId,
+            onModel: 'User',
+        }).catch(() => {}); 
+    }
+
+    const loggedOutUser = await UserModel.updateOne(
+        { _id: userId },
+        {
+            isActive: false,
+        }
+    );
+    
+    return loggedOutUser;
+};
+
+export const getUserAccountService = async (user) => {
+    const userCheck = await UserModel.findById(user._id).select('-password -emailOtp -isEmailSent -isDeleted -isActive');
+    if (!userCheck) {
+        throw new NotFoundError('User not found');
+    }
+    return userCheck;
 }

@@ -7,7 +7,7 @@ import { userAuth } from '../../../middlewares/auth.js';
 
 
 
-router.post('/', (userController.handleSignUp))
+router.post('/register', (userController.handleSignUp))
 router.patch(
   '/confirm-email',
   validation(confirmEmailSchema),
@@ -17,6 +17,6 @@ router.patch(
 router.post('/login', (userController.logIn))
 router.post('/resend-code', userController.resendCode);
 router.post('/logout',userAuth, (userController.logOut))
-router.get('/get-user-account',userAuth, (userController.getUserAccount))
+router.get('/profile',userAuth, (userController.getUserAccount))
     
 export default router
